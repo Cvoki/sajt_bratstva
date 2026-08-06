@@ -287,17 +287,16 @@ pod_body = f"""
 </div>
 <section class="section">
   <div class="wrap">
-    <p class="notice">✎ Подаци рачуна су привремени. Замијени их стварним (IBAN, SWIFT/BIC, назив банке, прималац) кад ми пошаљеш. Дугме „Копирај“ ради одмах.</p>
     <div class="donate-grid">
       <div class="account">
         <p class="eyebrow" style="margin-bottom:1rem">Подаци за уплату из иностранства</p>
-        <div class="acct-row"><span class="k">Прималац</span><span class="v">Братство Чворо<br><span style="font-weight:400;font-size:.85rem;color:var(--ink-soft)">〈адреса примаоца〉</span></span></div>
-        <div class="acct-row"><span class="k">IBAN</span><span class="v">BA39 XXXX XXXX XXXX XX
-          <button class="copy-btn" data-copy="BA39XXXXXXXXXXXXXX">Копирај</button></span></div>
-        <div class="acct-row"><span class="k">SWIFT / BIC</span><span class="v">XXXXBA2X
-          <button class="copy-btn" data-copy="XXXXBA2X">Копирај</button></span></div>
-        <div class="acct-row"><span class="k">Банка</span><span class="v">〈назив и адреса банке〉</span></div>
-        <div class="acct-row"><span class="k">Валута</span><span class="v">EUR</span></div>
+        <div class="acct-row"><span class="k">Прималац</span><span class="v">Братство Чворо<br><span style="font-weight:400;font-size:.85rem;color:var(--ink-soft)">Миошићи бб</span></span></div>
+        <div class="acct-row"><span class="k">IBAN</span><span class="v">BA39 5517 0025 2442 4825
+          <button class="copy-btn" data-copy="BA395517002524424825">Копирај</button></span></div>
+        <div class="acct-row"><span class="k">SWIFT / BIC</span><span class="v">BLBABA22
+          <button class="copy-btn" data-copy="BLBABA22">Копирај</button></span></div>
+        <div class="acct-row"><span class="k">Банка</span><span class="v">UniCredit Bank Banja Luka</span></div>
+        <div class="acct-row"><span class="k">Валута</span><span class="v">BAM / EUR</span></div>
         <div class="acct-row"><span class="k">Сврха уплате</span><span class="v">Донација — Братство Чворо</span></div>
       </div>
       <aside class="support-aside">
