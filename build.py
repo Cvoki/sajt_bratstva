@@ -140,7 +140,7 @@ index_body = f"""
     <p>Придружи се нашој Вибер заједници и прати вијести, окупљања и прославу славе.</p>
     <div class="hero-cta">
       <!-- ⇩ ЗАМИЈЕНИ href стварним линком Вибер групе кад стигне -->
-      <a class="btn btn--viber" href="#" data-viber>Придружи се Вибер заједници</a>
+      <a class="btn btn--viber" href="https://invite.viber.com/?g=pEFxNg3_m1bvadQUHJLG6bvn3-BWfbu4" target="_blank" rel="noopener" data-viber>Придружи се Вибер заједници</a>
     </div>
   </div>
 </section>
@@ -307,7 +307,7 @@ pod_body = f"""
         <hr class="rule">
         <h3>Питања?</h3>
         <p>Јави се преко наше Вибер заједнице.</p>
-        <a class="btn btn--viber" href="#" data-viber>Вибер заједница</a>
+        <a class="btn btn--viber" href="https://invite.viber.com/?g=pEFxNg3_m1bvadQUHJLG6bvn3-BWfbu4" target="_blank" rel="noopener" data-viber>Вибер заједница</a>
       </aside>
     </div>
   </div>
