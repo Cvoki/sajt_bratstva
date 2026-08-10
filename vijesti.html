@@ -44,19 +44,8 @@
 </div>
 <section class="section">
   <div class="wrap wrap--narrow">
-    <p class="notice">✎ Вијести ће се додавати кроз једноставан админ (Decap CMS): наслов, текст, слике и „Објави“ — без икаквог кода. Испод су примјери како ће изгледати објаве.</p>
-    <div class="news-list">
-      <article class="news-item reveal">
-        <time datetime="2026-10-31">31. октобар 2026.</time>
-        <h3>Прослава крсне славе — Свети Лука</h3>
-        <p>Позив свим члановима братства на заједничку прославу славе. <em>(примјер објаве)</em></p>
-      </article>
-      <article class="news-item reveal">
-        <time datetime="2026-08-01">1. август 2026.</time>
-        <h3>Годишње окупљање братства</h3>
-        <p>Обавјештење о датуму и мјесту окупљања. <em>(примјер објаве)</em></p>
-      </article>
-    </div>
+    <div id="vijesti-status" class="notice">Учитавање вијести…</div>
+    <div class="news-list" id="vijesti-lista"></div>
   </div>
 </section>
 <footer class="site-footer">
@@ -80,6 +69,8 @@
     <p class="copy">© <span id="year">2026</span> Братство Чворо. Сва права задржана.</p>
   </div>
 </footer>
+<script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+<script src="js/vijesti.js"></script>
 <script src="js/main.js"></script>
 </body>
 </html>
