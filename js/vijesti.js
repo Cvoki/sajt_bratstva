@@ -9,7 +9,7 @@
      Изгледа овако:
      https://docs.google.com/spreadsheets/d/e/2PACX-.../pub?output=csv
      ========================================================== */
-  var SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/1Ip3jb4w5zqk--CqRjhunUARk5rBIm7pH0t0BKwZtTvM/edit?usp=sharing";
+  var SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/1Ip3jb4w5zqk--CqRjhunUARk5rBIm7pH0t0BKwZtTvM/gviz/tq?tqx=out:csv";
   /* ⇧⇧⇧  само залијепи линк између наводника горе  ⇧⇧⇧ */
 
   var statusEl = document.getElementById("vijesti-status");
