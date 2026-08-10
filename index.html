@@ -310,6 +310,25 @@
 
   @keyframes rise{from{opacity:0; transform:translateY(26px);} to{opacity:1; transform:none;}}
   @keyframes fade{from{opacity:0;} to{opacity:1;}}
+
+  /* Вијести (уживо из Google табеле) */
+  #vijesti-status{ max-width:760px; margin:40px auto 0; text-align:center; font-family:var(--label); font-size:.9rem; color:var(--gold-deep); background:rgba(198,162,76,.10); border:1px dashed var(--gold); border-radius:12px; padding:16px 20px; }
+  #vijesti-status code{ background:rgba(14,33,72,.08); padding:1px 6px; border-radius:5px; }
+  .news-list{ max-width:760px; margin:40px auto 0; display:flex; flex-direction:column; gap:22px; }
+  .news-item{ background:#fff; border:1px solid var(--parchment-2); border-left:4px solid var(--gold); border-radius:12px; padding:26px 28px; box-shadow:0 6px 20px rgba(14,33,72,.06); }
+  .news-item time{ font-family:var(--label); font-size:.72rem; letter-spacing:.16em; text-transform:uppercase; color:var(--gold-deep); }
+  .news-item h3{ font-size:1.35rem; color:var(--navy); margin:6px 0 10px; font-family:var(--display); font-weight:700; }
+  .news-item p{ color:var(--ink-soft); margin:0; }
+  .news-item img{ width:100%; height:auto; border-radius:10px; margin:.4rem 0 .9rem; border:1px solid var(--parchment-2); }
+  .share-bar{ display:flex; flex-wrap:wrap; align-items:center; gap:8px; margin-top:16px; }
+  .share-label{ font-family:var(--label); font-size:.7rem; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); margin-right:2px; }
+  .share-btn{ font-family:var(--label); font-size:.76rem; line-height:1; cursor:pointer; border:0; border-radius:999px; padding:8px 13px; color:#fff; text-decoration:none; display:inline-flex; align-items:center; transition:filter .15s, transform .15s; }
+  .share-btn:hover{ filter:brightness(1.08); transform:translateY(-1px); }
+  .sb-viber{ background:#7360f2; } .sb-fb{ background:#1877f2; } .sb-wa{ background:#25d366; }
+  .sb-ig{ background:linear-gradient(45deg,#feda75,#fa7e1e,#d62976,#962fbf,#4f5bd5); }
+  .sb-copy{ background:var(--gold-deep); }
+  .vij-toast{ position:fixed; left:50%; bottom:26px; transform:translateX(-50%) translateY(16px); background:var(--navy-deep); color:var(--parchment); border:1px solid var(--gold); padding:11px 20px; border-radius:10px; font-family:var(--label); font-size:.85rem; opacity:0; pointer-events:none; transition:opacity .25s, transform .25s; z-index:1000; }
+  .vij-toast.show{ opacity:1; transform:translateX(-50%) translateY(0); }
 </style>
 </head>
 <body>
@@ -330,7 +349,7 @@
       <a href="#istorija">Историја</a>
       <a href="#galerija">Галерија</a>
       <a href="#stablo">Родословно стабло</a>
-      <a href="vijesti.html">Вијести</a>
+      <a href="#vijesti">Вијести</a>
       <a href="#podrska">Подржи братство</a>
     </nav>
   </div>
@@ -476,11 +495,10 @@
     <div class="sec-head reveal">
       <span class="eyebrow">Вијести</span>
       <h2>Обавјештења братства</h2>
-      <p class="lead">Окупљања, славе, помени и остале вијести братства — на једном мјесту.</p>
+      <p class="lead">Окупљања, славе, помени и остале вијести братства.</p>
     </div>
-    <div style="text-align:center; margin-top:36px;">
-      <a class="btn btn-gold" href="vijesti.html">Погледај све вијести →</a>
-    </div>
+    <div id="vijesti-status">Учитавање вијести…</div>
+    <div class="news-list" id="vijesti-lista"></div>
   </div>
 </section>
 
@@ -584,5 +602,7 @@
     if(t){ lbImg.src = t.getAttribute('data-full'); lbImg.alt = t.querySelector('img')?.alt || ''; lightbox.classList.add('open'); }
   });
 </script>
+<script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+<script src="js/vijesti.js"></script>
 </body>
 </html>
