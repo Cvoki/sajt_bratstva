@@ -271,3 +271,17 @@ p{ margin:0 0 1.1em; }
 
 /* фокус — приступачност */
 a:focus-visible, button:focus-visible, .btn:focus-visible{ outline:3px solid var(--gold-2); outline-offset:2px; }
+
+
+/* дугмад за дијељење вијести */
+.share-bar{ display:flex; flex-wrap:wrap; align-items:center; gap:8px; margin-top:16px; }
+.share-label{ font-size:.8rem; color:#6b6256; margin-right:2px; }
+.share-btn{ font-family:inherit; font-size:.76rem; line-height:1; cursor:pointer; border:0; border-radius:999px; padding:7px 13px; color:#fff; text-decoration:none; display:inline-flex; align-items:center; transition:filter .15s, transform .15s; }
+.share-btn:hover{ filter:brightness(1.08); transform:translateY(-1px); }
+.sb-viber{ background:#7360f2; }
+.sb-fb{ background:#1877f2; }
+.sb-wa{ background:#25d366; }
+.sb-ig{ background:linear-gradient(45deg,#feda75,#fa7e1e,#d62976,#962fbf,#4f5bd5); }
+.sb-copy{ background:#8a6d1f; }
+.vij-toast{ position:fixed; left:50%; bottom:26px; transform:translateX(-50%) translateY(16px); background:#0E2148; color:#F4EFE3; border:1px solid #C6A24C; padding:11px 20px; border-radius:10px; font-size:.85rem; opacity:0; pointer-events:none; transition:opacity .25s, transform .25s; z-index:1000; }
+.vij-toast.show{ opacity:1; transform:translateX(-50%) translateY(0); }
