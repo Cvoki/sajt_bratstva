@@ -1,0 +1,10 @@
+{
+  "name": "sajt-bratstva",
+  "private": true,
+  "scripts": {
+    "build": "node scripts/build-vesti.js"
+  },
+  "dependencies": {
+    "gray-matter": "^4.0.3"
+  }
+}

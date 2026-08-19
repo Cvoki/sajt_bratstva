@@ -23,7 +23,7 @@ In 1790 three brothers came to Romanija and started the line that grew into one 
 
 It's built as a **single page** you move through, from the coat of arms to today's news. Plain HTML, CSS and JavaScript - no database, no server, no display libraries. Which means it will still work in twenty years, and hosting costs nothing.
 
-The key decision: **content changes without touching code.** News is written in a Google Sheet, photos are dropped into a folder. Whoever takes over doesn't need to know a single line of HTML.
+The key decision: **content changes without touching code.** News is written through an admin panel at `/admin`, photos are dropped into a folder. Whoever takes over doesn't need to know a single line of HTML.
 
 ## What's on the site
 
@@ -33,28 +33,34 @@ The key decision: **content changes without touching code.** News is written in 
 | **History** | The origins of the brotherhood and a timeline across generations |
 | **Gallery** | Photographs from gatherings, with a lightbox view |
 | **Family tree** | An embedded tree from the FamilyEcho platform |
-| **News** | Announcements pulled live from a Google Sheet |
+| **News** | Announcements entered through the admin panel (`/admin`) |
 | **Support** | Donation account with an IBAN copy button and a Viber contact |
 
 ## Built with
 
-`HTML5` · `CSS3` · `JavaScript` (no libraries) · `PapaParse` · `Google Sheets` · `FamilyEcho`
+`HTML5` · `CSS3` · `JavaScript` (no libraries) · `Decap CMS` · `Netlify Identity` · `FamilyEcho`
 
-The only external dependency is PapaParse, a small library that reads the CSV from the Google Sheet. Everything else - menu, lightbox, copy-to-clipboard, animations - is handwritten, in a little over eighty lines.
+The site stays static for visitors - menu, lightbox, copy-to-clipboard, animations are handwritten. The only build step is for news: on every publish, a small Node script (`scripts/build-vesti.js`) turns the files in `content/vesti/` into `vesti.json`, which `js/vijesti.js` loads on the page.
 
 ## Structure
 
 ```
 .
 ├── index.html          # the whole site: all sections, styles and content
-├── css/style.css       # styles
+├── admin/               # Decap CMS admin panel (/admin) - login and news form
+│   ├── index.html
+│   └── config.yml
+├── content/vesti/       # one .md file per news item (written by the admin panel)
+├── scripts/
+│   └── build-vesti.js   # generates vesti.json from content/vesti/ at build time
+├── vesti.json           # generated file - the news the site reads (don't edit by hand)
 ├── js/
 │   ├── main.js         # menu, lightbox, IBAN copy, animations
 │   ├── galerija.js     # photo list
-│   └── vijesti.js      # reads news from the Google Sheet
+│   └── vijesti.js      # loads and renders vesti.json
 ├── assets/             # coat of arms in several sizes, favicon
-├── slike/              # gallery photographs
-├── build.py            # page generator (from the earlier, multi-page form)
+├── slike/              # gallery photographs and news images
+├── netlify.toml         # build command for Netlify
 └── *.html              # redirects from old addresses to sections
 ```
 
@@ -77,9 +83,7 @@ Type: **Playfair Display** for headings, **Spectral** for body text, **PT Sans**
 
 ### A news item
 
-News is written in a **Google Sheet**, which the site reads on every visit. The editor doesn't open code, doesn't log in anywhere, doesn't wait for anyone - they add a row and the news is live.
-
-The sheet must be published via *File → Share → Publish to web → CSV*, and its link lives in `js/vijesti.js`.
+News is entered through the admin panel at `/admin`, after logging in with an account the site administrator has approved (Netlify Identity). The editor fills in a title, text, date and image, turns off the "Draft" option and publishes - no code, no Google Sheet. The panel commits the change to GitHub itself, and Netlify runs `npm run build` on that deploy, which refreshes `vesti.json`.
 
 ### A photograph
 
@@ -99,18 +103,35 @@ git clone https://github.com/Cvoki/sajt_bratstva.git
 cd sajt_bratstva
 ```
 
-Open `index.html` in a browser.
-
-For a local server (needed to test the news feed, because of how browsers handle external data):
+Open `index.html` in a browser - to preview news locally, generate `vesti.json` first:
 
 ```bash
+npm install
+npm run build
 python3 -m http.server 8000
 # then open http://localhost:8000
 ```
 
+The admin panel (`/admin`) only works on a real Netlify deploy (it needs Identity + Git Gateway), not locally.
+
 ## Hosting
 
-The site is static, so it runs on any free service - **Netlify**, **Cloudflare Pages** or **GitHub Pages**. Connect the repository and every change publishes itself, usually within a minute.
+The site is static and hosted on **Netlify**. Connect the repository and every change publishes itself, usually within a minute.
+
+## Setting up the admin panel (once, in the Netlify dashboard)
+
+These steps have to be done by hand in Netlify - they can't be done through code:
+
+1. Connect the Netlify site to this GitHub repository.
+2. **Site settings → Identity → Enable Identity.**
+3. **Identity → Registration → Invite only** (so no one can self-register as an editor).
+4. **Identity → Services → Enable Git Gateway.**
+5. **Identity → Invite users** - invite the actual editor by email; they get a link to set a password.
+6. Check on `/admin` that login and publishing work before retiring the old workflow.
+
+## Card payments
+
+Alongside the IBAN, the site has a ready (but inactive) card payment option via WSPay - it activates once credentials are added in Netlify. Full instructions: [`docs/PAYMENTS.md`](docs/PAYMENTS.md).
 
 ## License
 

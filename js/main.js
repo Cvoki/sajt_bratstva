@@ -26,7 +26,7 @@
     document.querySelectorAll("[data-lightbox]").forEach(function (link) {
       link.addEventListener("click", function (e) {
         var full = link.getAttribute("href");
-        if (!full || full === "#") return; // празно мјесто — не отварај
+        if (!full || full === "#") return; // празно место — не отварај
         e.preventDefault();
         lbImg.src = full;
         lbImg.alt = link.getAttribute("data-alt") || "";

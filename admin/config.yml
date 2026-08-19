@@ -1,0 +1,23 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "slike"
+public_folder: "/slike"
+
+publish_mode: simple
+
+collections:
+  - name: "vesti"
+    label: "Вести"
+    label_singular: "Вест"
+    folder: "content/vesti"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    identifier_field: title
+    fields:
+      - { label: "Наслов", name: "title", widget: "string" }
+      - { label: "Датум", name: "date", widget: "datetime", format: "YYYY-MM-DDTHH:mm:ss.SSSZ", date_format: "YYYY-MM-DD", time_format: false, picker_utc: true }
+      - { label: "Слика", name: "image", widget: "image", required: false }
+      - { label: "Текст", name: "body", widget: "markdown" }
+      - { label: "Нацрт (не приказуј на сајту док је укључено)", name: "draft", widget: "boolean", default: true }
