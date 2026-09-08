@@ -1,6 +1,7 @@
 # Генерисано при build-у (`npm run build`, scripts/build-vesti.js) —
 # Netlify их прави при сваком deploy-у, не комитују се.
 /vesti.json
+/galerija.json
 /vesti/
 /sitemap.xml
 /robots.txt

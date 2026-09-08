@@ -50,14 +50,16 @@ The site stays static for visitors - menu, lightbox, copy-to-clipboard, animatio
 ├── admin/               # Decap CMS admin panel (/admin) - login and news form
 │   ├── index.html
 │   └── config.yml
-├── content/vesti/       # one .md file per news item (written by the admin panel)
+├── content/
+│   ├── vesti/           # one .md file per news item (written by the admin panel)
+│   └── galerija/        # one .md file per photo (written by the admin panel)
 ├── scripts/
-│   ├── build-vesti.js   # generates vesti.json + vesti/ + sitemap from content/vesti/
+│   ├── build-vesti.js   # generates vesti.json, galerija.json, vesti/, sitemap
 │   ├── build-vesti.test.js
 │   └── lib/             # markdown.js (Markdown→HTML), image-size.js
 ├── js/
 │   ├── main.js         # menu, lightbox, IBAN copy, animations
-│   ├── galerija.js     # photo list
+│   ├── galerija.js     # loads and renders galerija.json
 │   └── vijesti.js      # loads and renders vesti.json (list, filter, "latest")
 ├── assets/             # coat of arms in several sizes, favicon
 ├── slike/              # gallery photographs and news images
@@ -66,8 +68,8 @@ The site stays static for visitors - menu, lightbox, copy-to-clipboard, animatio
 └── *.html              # redirects from old addresses to sections
 ```
 
-Generated files (`vesti.json`, `vesti/`, `sitemap.xml`, `robots.txt`) are in `.gitignore` -
-Netlify rebuilds them on every deploy.
+Generated files (`vesti.json`, `galerija.json`, `vesti/`, `sitemap.xml`, `robots.txt`) are
+in `.gitignore` - Netlify rebuilds them on every deploy.
 
 Pages like `istorija.html` and `podrska.html` remain as redirects to the matching section, so links shared earlier still work.
 
@@ -94,14 +96,11 @@ How news works internally and what still needs polishing: [`docs/VESTI.md`](docs
 
 ### A photograph
 
-1. Drop the file into the `slike/` folder - lowercase, no spaces or diacritics (`slava-2025.jpg`, not `Слава 2025.jpg`).
-2. Add a line to `js/galerija.js`:
+Gallery photos are also entered through `/admin` → **Галерија** (Gallery): upload the
+image, write a caption, optionally a date and sort order, save. The build produces
+`galerija.json`, which `js/galerija.js` loads. No code.
 
-```js
-{ f: "slava-2025.jpg", opis: "Слава Свети Лука 2025." },
-```
-
-3. Save and push to GitHub - this can be done through the GitHub website itself, with no software at all.
+(A manual `SLIKE` list in `js/galerija.js` remains as a fallback for older photos.)
 
 ## Running it
 

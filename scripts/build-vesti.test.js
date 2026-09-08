@@ -8,12 +8,12 @@ const path = require("path");
 
 const md = require("./lib/markdown");
 const { fromBuffer } = require("./lib/image-size");
-const { readVesti, slugify, ogPage } = require("./build-vesti");
+const { readVesti, readGalerija, slugify, ogPage } = require("./build-vesti");
 
 test("slugify normalizuje ime fajla", () => {
   assert.equal(slugify("2025-01-15-slava.md"), "2025-01-15-slava");
   assert.equal(slugify("2025-10-01-Слава Луке.md"), "2025-10-01-слава-луке");
-  assert.equal(slugify(".md"), "vest");
+  assert.equal(slugify(".md"), "stavka");
 });
 
 test("renderMarkdown pravi bezbedan HTML", () => {
@@ -76,5 +76,21 @@ test("ogPage sadrži og: mete i redirect", () => {
   const html = ogPage({ slug: "test", title: "Проба", excerpt: "Опис.", date: "2025-06-01T00:00:00.000Z", img: "slike/x.jpg" });
   assert.match(html, /property="og:title" content="Проба"/);
   assert.match(html, /http-equiv="refresh"/);
-  assert.match(html, /vesti\/x\.jpg|slike\/x\.jpg/);
+  assert.match(html, /location\.replace\("\/#vest-test"\)/);
+});
+
+test("readGalerija: sortira po order pa datumu, izbacuje bez slike", () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "gal-"));
+  fs.writeFileSync(path.join(dir, "a.md"), "---\nimage: /slike/a.jpg\ncaption: Прва\ndate: 2024-01-01\n---\n");
+  fs.writeFileSync(path.join(dir, "b.md"), "---\nimage: /slike/b.jpg\ncaption: Друга\ndate: 2025-01-01\n---\n");
+  fs.writeFileSync(path.join(dir, "c.md"), "---\nimage: /slike/c.jpg\ncaption: Истакнута\norder: 1\n---\n");
+  fs.writeFileSync(path.join(dir, "d.md"), "---\ncaption: Без слике\n---\n");
+
+  const rows = readGalerija(dir);
+  fs.rmSync(dir, { recursive: true, force: true });
+
+  assert.equal(rows.length, 3, "фото без слике се избацује");
+  assert.equal(rows[0].opis, "Истакнута", "order 1 иде прво");
+  assert.equal(rows[1].opis, "Друга", "потом најновије по датуму");
+  assert.ok(!("date" in rows[0]) && !("order" in rows[0]), "интерна поља се не пишу");
 });

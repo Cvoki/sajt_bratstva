@@ -50,14 +50,16 @@
 ├── admin/               # Decap CMS админ панел (/admin) - логовање и форма за вести
 │   ├── index.html
 │   └── config.yml
-├── content/vesti/       # по један .md фајл по вести (пише их админ панел)
+├── content/
+│   ├── vesti/           # по један .md фајл по вести (пише их админ панел)
+│   └── galerija/        # по један .md фајл по фотографији (пише их админ панел)
 ├── scripts/
-│   ├── build-vesti.js   # генерише vesti.json + vesti/ + sitemap из content/vesti/
+│   ├── build-vesti.js   # генерише vesti.json, galerija.json, vesti/, sitemap
 │   ├── build-vesti.test.js
 │   └── lib/             # markdown.js (Markdown→HTML), image-size.js
 ├── js/
 │   ├── main.js         # мени, lightbox, копирање IBAN-а, анимације
-│   ├── galerija.js     # списак фотографија
+│   ├── galerija.js     # учитава и приказује galerija.json
 │   └── vijesti.js      # учитава и приказује vesti.json (листа, филтер, „најновије")
 ├── assets/             # грб у више величина, favicon
 ├── slike/              # фотографије за галерију и слике из вести
@@ -66,8 +68,8 @@
 └── *.html              # преусмерења са старих адреса на секције
 ```
 
-Генерисани фајлови (`vesti.json`, `vesti/`, `sitemap.xml`, `robots.txt`) стоје у `.gitignore` -
-Netlify их прави при сваком deploy-у.
+Генерисани фајлови (`vesti.json`, `galerija.json`, `vesti/`, `sitemap.xml`, `robots.txt`)
+стоје у `.gitignore` - Netlify их прави при сваком deploy-у.
 
 Странице попут `istorija.html` и `podrska.html` остале су као преусмерења ка одговарајућој секцији, да раније подељени линкови и даље раде.
 
@@ -94,14 +96,12 @@ Netlify их прави при сваком deploy-у.
 
 ### Фотографија
 
-1. Убаци фајл у фолдер `slike/` - малим словима, без размака и квачица (`slava-2025.jpg`, а не `Слава 2025.jpg`).
-2. У `js/galerija.js` допиши ред:
+Фотографије за галерију се такође уносе кроз `/admin` → **Галерија**: убаци слику,
+упиши опис, опционо датум и редни број, сачувај. Build прави `galerija.json` који
+`js/galerija.js` учитава. Без отварања кода.
 
-```js
-{ f: "slava-2025.jpg", opis: "Слава Свети Лука 2025." },
-```
-
-3. Сачувај и пошаљи на GitHub - може и кроз сам сајт GitHub-а, без икаквог програма.
+(За старије фотографије без админ панела и даље постоји ручни списак `SLIKE` у
+`js/galerija.js` као резерва.)
 
 ## Покретање
 

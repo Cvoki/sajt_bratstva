@@ -67,6 +67,14 @@ python3 -m http.server 8000
 
 `/admin` ради само на правом Netlify deploy-у (треба му Identity + Git Gateway).
 
+## Галерија (исти механизам)
+
+Фотографије галерије иду истим путем: колекција „Галерија" у `admin/config.yml`
+(`content/galerija/*.md`, поља слика / опис / датум / редни број / сакриј),
+`scripts/build-vesti.js` их сортира (редни број, па датум опадајуће) у `galerija.json`,
+а `js/galerija.js` их приказује у секцији `#galerija`. Ако `galerija.json` не постоји
+или је празан, `js/galerija.js` пада на ручни списак `SLIKE` у самом фајлу.
+
 ## Шта још није урађено
 
-Види [`TODO.md`](./TODO.md) — галерија кроз Decap, компресија слика, editorial workflow.
+Види [`TODO.md`](./TODO.md) — компресија слика, editorial workflow.

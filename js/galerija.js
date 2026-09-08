@@ -1,20 +1,18 @@
 /* Братство Чворо — галерија.
-   Слике стоје у фолдеру  slike/  .
-   Да додаш слику:
-     1) убаци фајл у фолдер  slike/  (нпр. slava-2025.jpg)
-     2) допиши један ред у списак испод, по узору на примјере.
-   Редослед у списку = редослед на сајту. */
+   Фотографије се додају кроз админ панел (/admin → Галерија); build
+   (scripts/build-vesti.js) прави galerija.json који се овде учитава.
+   Ако galerija.json још не постоји, пада на ручни списак SLIKE испод. */
 (function () {
   "use strict";
-
-  var SLIKE = [
-    // { f: "slava-2025.jpg",        opis: "Слава Свети Лука 2025." },
-    // { f: "okupljanje-miosici.jpg", opis: "Окупљање у Миошићима" },
-  ];
 
   var grid = document.getElementById("galerija-grid");
   var prazno = document.getElementById("galerija-prazno");
   if (!grid) return;
+
+  // Ручни списак (само за преглед пре него што админ панел проради).
+  var SLIKE = [
+    // { f: "slava-2025.jpg", opis: "Слава Свети Лука 2025." },
+  ];
 
   function esc(s) {
     return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) {
@@ -22,15 +20,31 @@
     });
   }
 
-  if (!SLIKE.length) return;              // нема слика → остаје порука „чека фотографије"
-  if (prazno) prazno.style.display = "none";
-
-  grid.innerHTML = SLIKE.map(function (s) {
-    var src = "slike/" + s.f;
-    var alt = esc(s.opis || "Фотографија братства");
+  function tile(src, opis, w, h) {
+    var dims = (w && h) ? ' width="' + w + '" height="' + h + '"' : "";
     return '<a class="gtile" data-full="' + esc(src) + '">' +
-             '<img loading="lazy" src="' + esc(src) + '" alt="' + alt + '" ' +
+             '<img loading="lazy" src="' + esc(src) + '" alt="' + esc(opis || "Фотографија братства") + '"' + dims + ' ' +
              'onerror="this.closest(\'.gtile\').style.display=\'none\'">' +
-           '</a>';
-  }).join("");
+           "</a>";
+  }
+
+  function render(list) {
+    if (!list || !list.length) return false;
+    grid.innerHTML = list.map(function (it) {
+      return tile(it.src, it.opis, it.w, it.h);
+    }).join("");
+    if (prazno) prazno.hidden = true;
+    return true;
+  }
+
+  fetch("galerija.json", { cache: "no-store" })
+    .then(function (res) { return res.ok ? res.json() : []; })
+    .then(function (rows) {
+      if (render(rows)) return;
+      // нема генерисане галерије → пробај ручни списак
+      render(SLIKE.map(function (s) { return { src: "slike/" + s.f, opis: s.opis }; }));
+    })
+    .catch(function () {
+      render(SLIKE.map(function (s) { return { src: "slike/" + s.f, opis: s.opis }; }));
+    });
 })();

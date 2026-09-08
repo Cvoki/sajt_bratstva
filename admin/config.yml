@@ -27,3 +27,18 @@ collections:
       - { label: "Опис слике", name: "caption", widget: "string", required: false }
       - { label: "Текст", name: "body", widget: "markdown" }
       - { label: "Нацрт (не приказуј на сајту док је укључено)", name: "draft", widget: "boolean", default: true }
+
+  - name: "galerija"
+    label: "Галерија"
+    label_singular: "Фотографија"
+    folder: "content/galerija"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    identifier_field: caption
+    summary: "{{caption}}"
+    fields:
+      - { label: "Фотографија", name: "image", widget: "image" }
+      - { label: "Опис", name: "caption", widget: "string" }
+      - { label: "Датум", name: "date", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false, required: false }
+      - { label: "Редни број (мањи број иде раније; остави празно за ређање по датуму)", name: "order", widget: "number", required: false, value_type: "int" }
+      - { label: "Сакриј са сајта", name: "draft", widget: "boolean", default: false, required: false }
