@@ -40,7 +40,7 @@
 
 `HTML5` · `CSS3` · `JavaScript` (без библиотека) · `Decap CMS` · `Netlify Identity` · `FamilyEcho`
 
-Сајт остаје статичан за посетиоце - мени, lightbox, копирање, анимације су писани ручно. Једина build обавеза постоји за вести: при сваком објављивању, мали Node скрипт (`scripts/build-vesti.js`) претвара фајлове из `content/vesti/` у `vesti.json`, који `js/vijesti.js` учитава на страници.
+Сајт остаје статичан за посетиоце - мени, lightbox, копирање, анимације су писани ручно. Једина build обавеза постоји за вести: при сваком објављивању, мали Node скрипт (`scripts/build-vesti.js`, без спољних зависности осим `gray-matter`) претвара фајлове из `content/vesti/` у `vesti.json` (готов и очишћен HTML), плус страницу по вести за дељење, RSS и `sitemap.xml`. Детаљно: [`docs/VESTI.md`](docs/VESTI.md).
 
 ## Структура
 
@@ -52,17 +52,22 @@
 │   └── config.yml
 ├── content/vesti/       # по један .md фајл по вести (пише их админ панел)
 ├── scripts/
-│   └── build-vesti.js   # генерише vesti.json из content/vesti/ при build-у
-├── vesti.json           # генерисан фајл - вести које чита сајт (не уређуј ручно)
+│   ├── build-vesti.js   # генерише vesti.json + vesti/ + sitemap из content/vesti/
+│   ├── build-vesti.test.js
+│   └── lib/             # markdown.js (Markdown→HTML), image-size.js
 ├── js/
 │   ├── main.js         # мени, lightbox, копирање IBAN-а, анимације
 │   ├── galerija.js     # списак фотографија
-│   └── vijesti.js      # учитава и приказује vesti.json
+│   └── vijesti.js      # учитава и приказује vesti.json (листа, филтер, „најновије")
 ├── assets/             # грб у више величина, favicon
 ├── slike/              # фотографије за галерију и слике из вести
 ├── netlify.toml         # build команда за Netlify
+├── docs/               # VESTI.md, PAYMENTS.md, TODO.md
 └── *.html              # преусмерења са старих адреса на секције
 ```
+
+Генерисани фајлови (`vesti.json`, `vesti/`, `sitemap.xml`, `robots.txt`) стоје у `.gitignore` -
+Netlify их прави при сваком deploy-у.
 
 Странице попут `istorija.html` и `podrska.html` остале су као преусмерења ка одговарајућој секцији, да раније подељени линкови и даље раде.
 
@@ -84,6 +89,8 @@
 ### Вест
 
 Вести се уносе кроз админ панел на `/admin`, уз пријаву налогом који је администратор сајта одобрио (Netlify Identity). Уредник попуни наслов, текст, датум и слику, искључи опцију „Нацрт" и објави - без отварања кода. Панел сам комитује промену у GitHub, а Netlify при том build-у покреће `npm run build` који освежава `vesti.json`.
+
+Како вести раде изнутра и шта још треба дорадити: [`docs/VESTI.md`](docs/VESTI.md).
 
 ### Фотографија
 
@@ -107,6 +114,7 @@ cd sajt_bratstva
 
 ```bash
 npm install
+npm test          # опционо - провера build логике
 npm run build
 python3 -m http.server 8000
 # па отвори http://localhost:8000

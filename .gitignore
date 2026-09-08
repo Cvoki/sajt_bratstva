@@ -1,0 +1,17 @@
+# Генерисано при build-у (`npm run build`, scripts/build-vesti.js) —
+# Netlify их прави при сваком deploy-у, не комитују се.
+/vesti.json
+/vesti/
+/sitemap.xml
+/robots.txt
+
+# ОС / уредник
+.DS_Store
+Thumbs.db
+*.log
+
+# Зависности су привремено комитоване ради селидбе на приватни рачунар
+# (види docs/TODO.md). Кад то буде готово:
+#   git rm -r --cached node_modules && git commit -m "stop tracking node_modules"
+# па откључати ред испод:
+# /node_modules/

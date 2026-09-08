@@ -40,7 +40,7 @@ The key decision: **content changes without touching code.** News is written thr
 
 `HTML5` · `CSS3` · `JavaScript` (no libraries) · `Decap CMS` · `Netlify Identity` · `FamilyEcho`
 
-The site stays static for visitors - menu, lightbox, copy-to-clipboard, animations are handwritten. The only build step is for news: on every publish, a small Node script (`scripts/build-vesti.js`) turns the files in `content/vesti/` into `vesti.json`, which `js/vijesti.js` loads on the page.
+The site stays static for visitors - menu, lightbox, copy-to-clipboard, animations are handwritten. The only build step is for news: on every publish, a small Node script (`scripts/build-vesti.js`, no dependencies beyond `gray-matter`) turns the files in `content/vesti/` into `vesti.json` (with pre-rendered, sanitized HTML), plus a per-item share page, an RSS feed and `sitemap.xml`. Details: [`docs/VESTI.md`](docs/VESTI.md).
 
 ## Structure
 
@@ -52,17 +52,22 @@ The site stays static for visitors - menu, lightbox, copy-to-clipboard, animatio
 │   └── config.yml
 ├── content/vesti/       # one .md file per news item (written by the admin panel)
 ├── scripts/
-│   └── build-vesti.js   # generates vesti.json from content/vesti/ at build time
-├── vesti.json           # generated file - the news the site reads (don't edit by hand)
+│   ├── build-vesti.js   # generates vesti.json + vesti/ + sitemap from content/vesti/
+│   ├── build-vesti.test.js
+│   └── lib/             # markdown.js (Markdown→HTML), image-size.js
 ├── js/
 │   ├── main.js         # menu, lightbox, IBAN copy, animations
 │   ├── galerija.js     # photo list
-│   └── vijesti.js      # loads and renders vesti.json
+│   └── vijesti.js      # loads and renders vesti.json (list, filter, "latest")
 ├── assets/             # coat of arms in several sizes, favicon
 ├── slike/              # gallery photographs and news images
 ├── netlify.toml         # build command for Netlify
+├── docs/               # VESTI.md, PAYMENTS.md, TODO.md
 └── *.html              # redirects from old addresses to sections
 ```
+
+Generated files (`vesti.json`, `vesti/`, `sitemap.xml`, `robots.txt`) are in `.gitignore` -
+Netlify rebuilds them on every deploy.
 
 Pages like `istorija.html` and `podrska.html` remain as redirects to the matching section, so links shared earlier still work.
 
@@ -84,6 +89,8 @@ Type: **Playfair Display** for headings, **Spectral** for body text, **PT Sans**
 ### A news item
 
 News is entered through the admin panel at `/admin`, after logging in with an account the site administrator has approved (Netlify Identity). The editor fills in a title, text, date and image, turns off the "Draft" option and publishes - no code, no Google Sheet. The panel commits the change to GitHub itself, and Netlify runs `npm run build` on that deploy, which refreshes `vesti.json`.
+
+How news works internally and what still needs polishing: [`docs/VESTI.md`](docs/VESTI.md).
 
 ### A photograph
 
@@ -107,6 +114,7 @@ Open `index.html` in a browser - to preview news locally, generate `vesti.json` 
 
 ```bash
 npm install
+npm test          # optional - checks the build logic
 npm run build
 python3 -m http.server 8000
 # then open http://localhost:8000

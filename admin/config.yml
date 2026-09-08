@@ -18,6 +18,12 @@ collections:
     fields:
       - { label: "Наслов", name: "title", widget: "string" }
       - { label: "Датум", name: "date", widget: "datetime", format: "YYYY-MM-DDTHH:mm:ss.SSSZ", date_format: "YYYY-MM-DD", time_format: false, picker_utc: true }
+      - label: "Категорија"
+        name: "category"
+        widget: "select"
+        required: false
+        options: ["Слава", "Помен", "Окупљање", "Обавештење"]
       - { label: "Слика", name: "image", widget: "image", required: false }
+      - { label: "Опис слике", name: "caption", widget: "string", required: false }
       - { label: "Текст", name: "body", widget: "markdown" }
       - { label: "Нацрт (не приказуј на сајту док је укључено)", name: "draft", widget: "boolean", default: true }

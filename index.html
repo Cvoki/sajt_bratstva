@@ -6,6 +6,14 @@
 <title>Братство Чворо — Романија 1790</title>
 <meta name="description" content="Званична страница Братства Чворо са Романије. Обележја, историја, галерија, родословно стабло и вести братства." />
 <link rel="icon" type="image/jpeg" href="assets/grb.jpg" />
+<link rel="alternate" type="application/rss+xml" title="Братство Чворо — Вести" href="/vesti/rss.xml" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Братство Чворо" />
+<meta property="og:title" content="Братство Чворо — Романија 1790" />
+<meta property="og:description" content="Званична страница Братства Чворо са Романије. Обележја, историја, галерија, родословно стабло и вести братства." />
+<meta property="og:image" content="assets/grb-512.jpg" />
+<meta property="og:locale" content="sr_RS" />
+<meta name="twitter:card" content="summary_large_image" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700;800;900&family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,400&family=PT+Sans:wght@400;700&display=swap" rel="stylesheet" />
@@ -33,6 +41,7 @@
   }
 
   *{box-sizing:border-box;}
+  [hidden]{display:none !important;}
   html{scroll-behavior:smooth;}
   body{
     margin:0;
@@ -312,15 +321,44 @@
   @keyframes rise{from{opacity:0; transform:translateY(26px);} to{opacity:1; transform:none;}}
   @keyframes fade{from{opacity:0;} to{opacity:1;}}
 
-  /* Вести (уживо из Google табеле) */
+  /* Вести */
   #vijesti-status{ max-width:760px; margin:40px auto 0; text-align:center; font-family:var(--label); font-size:.9rem; color:var(--gold-deep); background:rgba(198,162,76,.10); border:1px dashed var(--gold); border-radius:12px; padding:16px 20px; }
-  #vijesti-status code{ background:rgba(14,33,72,.08); padding:1px 6px; border-radius:5px; }
-  .news-list{ max-width:760px; margin:40px auto 0; display:flex; flex-direction:column; gap:22px; }
-  .news-item{ background:#fff; border:1px solid var(--parchment-2); border-left:4px solid var(--gold); border-radius:12px; padding:26px 28px; box-shadow:0 6px 20px rgba(14,33,72,.06); }
+  .news-filter{ max-width:760px; margin:36px auto 0; display:flex; flex-wrap:wrap; justify-content:center; gap:8px; }
+  .news-filter-btn{ font-family:var(--label); font-size:.74rem; letter-spacing:.06em; text-transform:uppercase; cursor:pointer; border:1px solid var(--gold); background:transparent; color:var(--gold-deep); border-radius:999px; padding:7px 15px; transition:background .15s, color .15s; }
+  .news-filter-btn:hover{ background:rgba(198,162,76,.14); }
+  .news-filter-btn.is-active{ background:var(--gold); color:var(--navy-deep); }
+  .news-list{ max-width:760px; margin:32px auto 0; display:flex; flex-direction:column; gap:22px; }
+  .news-item{ background:#fff; border:1px solid var(--parchment-2); border-left:4px solid var(--gold); border-radius:12px; padding:26px 28px; box-shadow:0 6px 20px rgba(14,33,72,.06); scroll-margin-top:90px; }
+  .news-item .news-meta{ display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
   .news-item time{ font-family:var(--label); font-size:.72rem; letter-spacing:.16em; text-transform:uppercase; color:var(--gold-deep); }
+  .news-cat{ font-family:var(--label); font-size:.64rem; letter-spacing:.14em; text-transform:uppercase; color:var(--crimson); border:1px solid rgba(142,27,34,.35); border-radius:999px; padding:2px 9px; }
   .news-item h3{ font-size:1.35rem; color:var(--navy); margin:6px 0 10px; font-family:var(--display); font-weight:700; }
-  .news-item p{ color:var(--ink-soft); margin:0; }
-  .news-item img{ width:100%; height:auto; border-radius:10px; margin:.4rem 0 .9rem; border:1px solid var(--parchment-2); }
+  .news-body{ color:var(--ink-soft); }
+  .news-body p{ margin:0 0 .8rem; }
+  .news-body p:last-child{ margin-bottom:0; }
+  .news-body h4{ font-size:1.08rem; color:var(--navy); font-family:var(--display); margin:1rem 0 .4rem; }
+  .news-body h5{ font-size:.96rem; color:var(--navy); font-family:var(--display); margin:.9rem 0 .3rem; }
+  .news-body ul, .news-body ol{ margin:0 0 .8rem; padding-left:1.4rem; }
+  .news-body li{ margin:.2rem 0; }
+  .news-body a{ color:var(--gold-deep); font-weight:600; text-decoration:underline; }
+  .news-body blockquote{ margin:.8rem 0; padding:.3rem 0 .3rem 1rem; border-left:3px solid var(--gold); color:var(--navy); font-style:italic; }
+  .news-body code{ background:rgba(14,33,72,.08); padding:1px 6px; border-radius:5px; font-size:.9em; }
+  .news-body hr{ border:0; border-top:1px solid var(--parchment-2); margin:1rem 0; }
+  .news-item figure{ margin:.4rem 0 .9rem; }
+  .news-item img{ width:100%; height:auto; border-radius:10px; border:1px solid var(--parchment-2); }
+  .news-item figcaption{ font-family:var(--label); font-size:.76rem; color:var(--gold-deep); text-align:center; margin-top:6px; }
+  .vesti-more-wrap{ text-align:center; margin-top:28px; }
+  #vijesti-rss{ text-align:center; margin:22px 0 0; }
+  #vijesti-rss a{ font-family:var(--label); font-size:.76rem; letter-spacing:.08em; text-transform:uppercase; color:var(--gold-deep); text-decoration:none; }
+  #vijesti-rss a:hover{ text-decoration:underline; }
+  #najnovije .post{ text-decoration:none; }
+  .post-link{ transition:transform .15s var(--ease), box-shadow .2s; }
+  .post-link:hover{ transform:translateY(-3px); box-shadow:0 12px 28px rgba(14,33,72,.12); }
+  .post-img{ width:100%; height:170px; object-fit:cover; }
+  .post .post-bar{ display:block; height:6px; background:linear-gradient(90deg,var(--crimson),var(--gold)); }
+  .post .pbody{ display:block; }
+  .post .ptitle{ display:block; font-family:var(--display); font-weight:700; font-size:1.15rem; color:var(--navy); margin:8px 0 8px; }
+  .post .pexc{ display:block; font-size:.92rem; color:var(--ink-soft); }
   .share-bar{ display:flex; flex-wrap:wrap; align-items:center; gap:8px; margin-top:16px; }
   .share-label{ font-family:var(--label); font-size:.7rem; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); margin-right:2px; }
   .share-btn{ font-family:var(--label); font-size:.76rem; line-height:1; cursor:pointer; border:0; border-radius:999px; padding:8px 13px; color:#fff; text-decoration:none; display:inline-flex; align-items:center; transition:filter .15s, transform .15s; }
@@ -369,6 +407,20 @@
     <a class="btn btn-ghost" href="#istorija">Историја братства</a>
   </div>
 </div>
+
+<!-- ================= НАЈНОВИЈЕ (кратак преглед вести) ================= -->
+<section id="najnovije" class="alt" hidden>
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Најновије</span>
+      <h2>Из братства</h2>
+    </div>
+    <div class="news-grid" id="najnovije-grid"></div>
+    <p style="text-align:center; margin-top:28px;">
+      <a class="btn btn-ghost" href="#vijesti">Све вести</a>
+    </p>
+  </div>
+</section>
 
 <!-- ================= OBILJEŽJA ================= -->
 <section id="obiljezja">
@@ -492,8 +544,13 @@
       <h2>Обавештења братства</h2>
       <p class="lead">Окупљања, славе, помени и остале вести братства.</p>
     </div>
+    <div id="vijesti-filter" class="news-filter" hidden></div>
     <div id="vijesti-status">Учитавање вести…</div>
     <div class="news-list" id="vijesti-lista"></div>
+    <div class="vesti-more-wrap">
+      <button type="button" id="vijesti-vise" class="btn btn-ghost" hidden>Прикажи још</button>
+    </div>
+    <p id="vijesti-rss" hidden><a href="/vesti/rss.xml">RSS пратилац вести →</a></p>
   </div>
 </section>
 
