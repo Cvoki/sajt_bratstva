@@ -2,5 +2,9 @@
   publish = "."
   command = "npm test && npm run build"
 
+[build.environment]
+  # node --test користи glob образац (Node 21+); LTS 22 да Netlify build не падне
+  NODE_VERSION = "22"
+
 [functions]
   directory = "netlify/functions"
